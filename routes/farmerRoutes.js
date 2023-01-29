@@ -19,7 +19,16 @@ router.post("/create", async (req, res) => {
     }
 })
 
-
+router.get("/farmer/:id",async(req,res)=>{
+    try {
+        const {id } = req.params
+        const farmer = await pool.query("SELECT * FROM farmersdata WHERE f_id = $1",[id])
+        res.json(farmer.rows[0])
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json("Internal Server Error")
+    }
+})
 router.get("/getfarmers", async (req, res) => {
     try {
         const farmers = await pool.query("SELECT * FROM farmersdata")
