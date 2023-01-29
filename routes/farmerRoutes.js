@@ -35,6 +35,10 @@ router.put("/update/:id", async (req, res) => {
         const { id } = req.params
         const { vno, address, name, variety, datetime } = req.body
 
+        const updateFarmer = await pool.query("UPDATE farmersdata SET name = $1, vno = $2, address = $3, variety=$4, datetime = $5 WHERE f_id = $6 ", [name, vno, address, variety, datetime, id])
+
+        res.json("Farmer's Profile Updated Successfully")
+
     } catch (error) {
         console.log(error)
         return res.status(500).json("Internal Server Error..")
