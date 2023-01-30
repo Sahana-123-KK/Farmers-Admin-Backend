@@ -1,11 +1,13 @@
 const express = require("express")
 const router = express.Router()
 const pool = require('../db')
+const authorize = require("../middlewares/authorization")
+
 router.get("/", (req, res) => {
     res.send("Hello welcome to farmers routes...")
 })
 
-router.post("/create", async (req, res) => {
+router.post("/create",authorize,  async (req, res) => {
     try {
         const { vno, address, name, variety, datetime } = req.body
 
@@ -19,7 +21,7 @@ router.post("/create", async (req, res) => {
     }
 })
 
-router.get("/farmer/:id",async(req,res)=>{
+router.get("/farmer/:id",authorize, async(req,res)=>{
     try {
         const {id } = req.params
         const farmer = await pool.query("SELECT * FROM farmersdata WHERE f_id = $1",[id])
@@ -29,7 +31,7 @@ router.get("/farmer/:id",async(req,res)=>{
         return res.status(500).json("Internal Server Error")
     }
 })
-router.get("/getfarmers", async (req, res) => {
+router.get("/getfarmers",authorize,  async (req, res) => {
     try {
         const farmers = await pool.query("SELECT * FROM farmersdata")
         res.json(farmers.rows)
@@ -39,7 +41,7 @@ router.get("/getfarmers", async (req, res) => {
     }
 })
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id",authorize,  async (req, res) => {
     try {
         const { id } = req.params
         const { vno, address, name, variety, datetime } = req.body
@@ -54,7 +56,7 @@ router.put("/update/:id", async (req, res) => {
     }
 })
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", authorize,async (req, res) => {
     try {
         const { id } = req.params
         const deleteFarmer = await pool.query("DELETE FROM farmersdata WHERE f_id = $1", [id])
