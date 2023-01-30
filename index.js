@@ -13,5 +13,5 @@ app.get("/",async(req,res)=>{
     res.send("hello")
 })
 app.listen(7000,()=>{
-    console.log("Connected To Backend Server")
+    console.log("Connected To Backend Server of Farmers' App")
 })
