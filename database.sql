@@ -16,3 +16,8 @@ CREATE TABLE users(
     user_email VARCHAR(255),
     user_password VARCHAR(255)
 );
+
+CREATE TABLE varieties(
+    v_id SERIAL PRIMARY KEY,
+    name VARCHAR(255)
+);

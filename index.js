@@ -9,6 +9,7 @@ app.use(express.json())
 app.use("/farmers",require("./routes/farmerRoutes"))
 app.use("/auth",require("./routes/auth"))
 app.use("/dashboard",require("./routes/dashboard"))
+app.use("/varieties",require("./routes/varieties"))
 app.get("/",async(req,res)=>{
     res.send("hello")
 })
