@@ -9,13 +9,13 @@ router.get("/", (req, res) => {
 
 router.post("/create",authorize,  async (req, res) => {
     try {
-        let { vno, address, name, variety, datetime ,other} = req.body
-        if(variety=="other"){
-            if(!other){
+        let { vno, address, name, variety, datetime ,others} = req.body
+        if(variety=="others"){
+            if(!others){
                 return res.status(402).json("Fill the Other Field")
             }
-            const addvariety = await pool.query("INSERT INTO varieties (name) VALUES ($1) RETURNING *",[other])
-            variety = other
+            const addvariety = await pool.query("INSERT INTO varieties (name) VALUES ($1) RETURNING *",[others])
+            variety = others
         }
 
         const newFarmer = await pool.query("INSERT INTO farmersdata (address,vno,name,variety,datetime) VALUES ($1,$2,$3,$4,$5) RETURNING *", [address, vno, name, variety, datetime])
